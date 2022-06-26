@@ -1,6 +1,11 @@
 fragment PageParts on Page {
   title
   path
+  seo {
+    __typename
+    title
+    description
+  }
   blocks {
     __typename
     ... on PageBlocksHero {

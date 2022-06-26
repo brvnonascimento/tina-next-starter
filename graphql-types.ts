@@ -141,6 +141,7 @@ export type Page = Document &
     blocks?: Maybe<Array<Maybe<PageBlocks>>>
     id: Scalars['ID']
     path: Scalars['String']
+    seo?: Maybe<PageSeo>
     title: Scalars['String']
   }
 
@@ -185,6 +186,18 @@ export type PageInfo = {
 export type PageMutation = {
   blocks?: InputMaybe<Array<InputMaybe<PageBlocksMutation>>>
   path?: InputMaybe<Scalars['String']>
+  seo?: InputMaybe<PageSeoMutation>
+  title?: InputMaybe<Scalars['String']>
+}
+
+export type PageSeo = {
+  __typename?: 'PageSeo'
+  description: Scalars['String']
+  title: Scalars['String']
+}
+
+export type PageSeoMutation = {
+  description?: InputMaybe<Scalars['String']>
   title?: InputMaybe<Scalars['String']>
 }
 
@@ -299,6 +312,12 @@ export type HeroBlockPropsFragment = {
   text?: string | null
 }
 
+export type SeoPropsFragment = {
+  __typename?: 'PageSeo'
+  title: string
+  description: string
+}
+
 export type PageQueryVariables = Exact<{
   path: Scalars['String']
 }>
@@ -309,6 +328,7 @@ export type PageQuery = {
     __typename?: 'Page'
     id: string
     title: string
+    seo?: { __typename?: 'PageSeo'; title: string; description: string } | null
     blocks?: Array<{
       __typename: 'PageBlocksHero'
       headline?: string | null

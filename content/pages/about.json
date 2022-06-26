@@ -1,6 +1,10 @@
 {
   "title": "About",
   "path": "about",
+  "seo": {
+    "title": "About",
+    "description": "lorem"
+  },
   "blocks": [
     {
       "headline": "Here's some text above the other text",

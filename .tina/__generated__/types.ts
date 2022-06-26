@@ -165,6 +165,12 @@ export type CollectionDocumentsArgs = {
 
 export type DocumentNode = Page | Posts;
 
+export type PageSeo = {
+  __typename?: 'PageSeo';
+  title: Scalars['String'];
+  description: Scalars['String'];
+};
+
 export type PageBlocksHero = {
   __typename?: 'PageBlocksHero';
   headline?: Maybe<Scalars['String']>;
@@ -177,6 +183,7 @@ export type Page = Node & Document & {
   __typename?: 'Page';
   title: Scalars['String'];
   path: Scalars['String'];
+  seo?: Maybe<PageSeo>;
   blocks?: Maybe<Array<Maybe<PageBlocks>>>;
   id: Scalars['ID'];
   _sys: SystemInfo;
@@ -286,6 +293,11 @@ export type DocumentMutation = {
   posts?: InputMaybe<PostsMutation>;
 };
 
+export type PageSeoMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+};
+
 export type PageBlocksHeroMutation = {
   headline?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['String']>;
@@ -298,6 +310,7 @@ export type PageBlocksMutation = {
 export type PageMutation = {
   title?: InputMaybe<Scalars['String']>;
   path?: InputMaybe<Scalars['String']>;
+  seo?: InputMaybe<PageSeoMutation>;
   blocks?: InputMaybe<Array<InputMaybe<PageBlocksMutation>>>;
 };
 
@@ -306,7 +319,7 @@ export type PostsMutation = {
   body?: InputMaybe<Scalars['JSON']>;
 };
 
-export type PagePartsFragment = { __typename?: 'Page', title: string, path: string, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null };
+export type PagePartsFragment = { __typename?: 'Page', title: string, path: string, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null };
 
 export type PostsPartsFragment = { __typename?: 'Posts', title?: string | null, body?: any | null };
 
@@ -315,7 +328,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, path: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null } };
+export type PageQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, path: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null } };
 
 export type PageConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -326,7 +339,7 @@ export type PageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'Page', id: string, title: string, path: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null } | null } | null> | null } };
+export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'Page', id: string, title: string, path: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null } | null } | null> | null } };
 
 export type PostsQueryVariables = Exact<{
   relativePath: Scalars['String'];
@@ -350,6 +363,11 @@ export const PagePartsFragmentDoc = gql`
     fragment PageParts on Page {
   title
   path
+  seo {
+    __typename
+    title
+    description
+  }
   blocks {
     __typename
     ... on PageBlocksHero {

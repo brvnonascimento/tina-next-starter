@@ -8,12 +8,16 @@ import { gql, staticRequest } from 'tinacms'
 import { useTina } from 'tinacms/dist/edit-state'
 import { PagePathsQuery, PageQuery } from '../../graphql-types'
 import Block, { BlockPropsFragmentDocument } from '../blocks/Block.server'
+import SEO, { SEOPropsFragmentDocument } from '../components/SEO.server'
 
 const PageQueryDocument = gql`
   query Page($path: String!) {
     page(relativePath: $path) {
       id
       title
+      seo {
+        ...SEOProps
+      }
       blocks {
         ...BlockProps
       }
@@ -21,6 +25,7 @@ const PageQueryDocument = gql`
   }
 
   ${BlockPropsFragmentDocument}
+  ${SEOPropsFragmentDocument}
 `
 
 const Page: NextPage<{ data: PageQuery } & Params> = ({
@@ -34,14 +39,13 @@ const Page: NextPage<{ data: PageQuery } & Params> = ({
   })
 
   return (
-    <div>
-      <h1 data-tinafield="title">{data.page.title}</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+    <main>
+      <SEO data={data.page.seo} />
 
       {data?.page?.blocks?.map(
         (data, i) => data && <Block key={i} data={data} />
       )}
-    </div>
+    </main>
   )
 }
 

@@ -79,6 +79,11 @@ type Collection {
 
 union DocumentNode = Page | Posts
 
+type PageSeo {
+  title: String!
+  description: String!
+}
+
 type PageBlocksHero {
   headline: String
   text: String
@@ -89,6 +94,7 @@ union PageBlocks = PageBlocksHero
 type Page implements Node & Document {
   title: String!
   path: String!
+  seo: PageSeo
   blocks: [PageBlocks]
   id: ID!
   _sys: SystemInfo!
@@ -141,6 +147,11 @@ input DocumentMutation {
   posts: PostsMutation
 }
 
+input PageSeoMutation {
+  title: String
+  description: String
+}
+
 input PageBlocksHeroMutation {
   headline: String
   text: String
@@ -153,6 +164,7 @@ input PageBlocksMutation {
 input PageMutation {
   title: String
   path: String
+  seo: PageSeoMutation
   blocks: [PageBlocksMutation]
 }
 
