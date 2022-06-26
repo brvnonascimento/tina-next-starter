@@ -1,0 +1,16 @@
+fragment PageParts on Page {
+  title
+  path
+  blocks {
+    __typename
+    ... on PageBlocksHero {
+      headline
+      text
+    }
+  }
+}
+
+fragment PostsParts on Posts {
+  title
+  body
+}

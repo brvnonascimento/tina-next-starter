@@ -3,15 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "tinacms server:start -c \"next dev & yarn codegen --watch\"",
+    "build": "tinacms server:start -c \"next build\"",
+    "start": "tinacms server:start -c \"next start\"",
+    "lint": "next lint",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
-    "next": "12.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.5.1",
+    "@graphql-codegen/typescript-operations": "^2.4.2",
+    "@tinacms/cli": "^0.60.24",
+    "next": "^12.1.7-canary.48",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-tinacms-editor": "^0.53.24",
+    "styled-components": "^5.3.5",
+    "tinacms": "^0.68.10"
   },
   "devDependencies": {
     "@types/node": "18.0.0",

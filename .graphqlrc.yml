@@ -1,0 +1,2 @@
+schema: './.tina/__generated__/schema.gql'
+documents: 'src/**/*.{graphql,js,ts,jsx,tsx}'

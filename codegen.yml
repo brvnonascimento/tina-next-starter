@@ -1,0 +1,12 @@
+schema: './.tina/__generated__/schema.gql'
+documents: "src/**/*.{ts,tsx}"
+generates:
+  ./graphql-types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+    config:
+      enumsAsTypes: true
+    hooks:
+      afterOneFileWrite:
+        - prettier --write

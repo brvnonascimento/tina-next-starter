@@ -1,8 +1,12 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { AppComponent } from 'next/dist/shared/lib/router/router.js'
+import Tina from '../../.tina/components/TinaDynamicProvider.js'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const App: AppComponent = ({ Component, pageProps }) => {
+  return (
+    <Tina>
+      <Component {...pageProps} />
+    </Tina>
+  )
 }
 
-export default MyApp
+export default App
