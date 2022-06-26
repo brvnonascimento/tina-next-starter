@@ -1,3 +1,4 @@
+import { css } from 'linaria'
 import { gql, TinaTemplate } from 'tinacms'
 import { HeroBlockPropsFragment } from '../../graphql-types'
 import { BaseBlockProps } from '../types/block'
@@ -6,7 +7,13 @@ export type HeroBlockProps = BaseBlockProps<HeroBlockPropsFragment>
 
 const HeroBlock = ({ data }: HeroBlockProps) => {
   return (
-    <section>
+    <section
+      className={css`
+        h1 {
+          font-size: 2rem;
+        }
+      `}
+    >
       <h1>{data.headline}</h1>
       <p>{data.text}</p>
     </section>

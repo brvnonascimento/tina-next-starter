@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "next/babel",
+    "@linaria"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "runtime": "automatic"
+      },
+      "dynamic-import-node"
+    ]
+  ]
+}
