@@ -19,7 +19,13 @@
     "jsx": "preserve",
     "incremental": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "baseUrl": "./",
+    "paths": {
+      "tina-types": [
+        "./.tina/__generated__/types.ts"
+      ],
+    }
   },
   "include": [
     "next-env.d.ts",

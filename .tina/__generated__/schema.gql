@@ -84,16 +84,30 @@ type PageSeo {
   description: String!
 }
 
+type PageBlocksHeroImage {
+  src: String!
+  alt: String!
+  width: Float!
+  height: Float!
+}
+
 type PageBlocksHero {
   headline: String
   text: String
+  image: PageBlocksHeroImage
 }
 
-union PageBlocks = PageBlocksHero
+type PageBlocksImage {
+  src: String!
+  alt: String!
+  width: Float!
+  height: Float!
+}
+
+union PageBlocks = PageBlocksHero | PageBlocksImage
 
 type Page implements Node & Document {
   title: String!
-  path: String!
   seo: PageSeo
   blocks: [PageBlocks]
   id: ID!
@@ -152,18 +166,33 @@ input PageSeoMutation {
   description: String
 }
 
+input PageBlocksHeroImageMutation {
+  src: String
+  alt: String
+  width: Float
+  height: Float
+}
+
 input PageBlocksHeroMutation {
   headline: String
   text: String
+  image: PageBlocksHeroImageMutation
+}
+
+input PageBlocksImageMutation {
+  src: String
+  alt: String
+  width: Float
+  height: Float
 }
 
 input PageBlocksMutation {
   hero: PageBlocksHeroMutation
+  image: PageBlocksImageMutation
 }
 
 input PageMutation {
   title: String
-  path: String
   seo: PageSeoMutation
   blocks: [PageBlocksMutation]
 }

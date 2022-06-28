@@ -171,18 +171,34 @@ export type PageSeo = {
   description: Scalars['String'];
 };
 
+export type PageBlocksHeroImage = {
+  __typename?: 'PageBlocksHeroImage';
+  src: Scalars['String'];
+  alt: Scalars['String'];
+  width: Scalars['Float'];
+  height: Scalars['Float'];
+};
+
 export type PageBlocksHero = {
   __typename?: 'PageBlocksHero';
   headline?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
+  image?: Maybe<PageBlocksHeroImage>;
 };
 
-export type PageBlocks = PageBlocksHero;
+export type PageBlocksImage = {
+  __typename?: 'PageBlocksImage';
+  src: Scalars['String'];
+  alt: Scalars['String'];
+  width: Scalars['Float'];
+  height: Scalars['Float'];
+};
+
+export type PageBlocks = PageBlocksHero | PageBlocksImage;
 
 export type Page = Node & Document & {
   __typename?: 'Page';
   title: Scalars['String'];
-  path: Scalars['String'];
   seo?: Maybe<PageSeo>;
   blocks?: Maybe<Array<Maybe<PageBlocks>>>;
   id: Scalars['ID'];
@@ -298,18 +314,33 @@ export type PageSeoMutation = {
   description?: InputMaybe<Scalars['String']>;
 };
 
+export type PageBlocksHeroImageMutation = {
+  src?: InputMaybe<Scalars['String']>;
+  alt?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Float']>;
+  height?: InputMaybe<Scalars['Float']>;
+};
+
 export type PageBlocksHeroMutation = {
   headline?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<PageBlocksHeroImageMutation>;
+};
+
+export type PageBlocksImageMutation = {
+  src?: InputMaybe<Scalars['String']>;
+  alt?: InputMaybe<Scalars['String']>;
+  width?: InputMaybe<Scalars['Float']>;
+  height?: InputMaybe<Scalars['Float']>;
 };
 
 export type PageBlocksMutation = {
   hero?: InputMaybe<PageBlocksHeroMutation>;
+  image?: InputMaybe<PageBlocksImageMutation>;
 };
 
 export type PageMutation = {
   title?: InputMaybe<Scalars['String']>;
-  path?: InputMaybe<Scalars['String']>;
   seo?: InputMaybe<PageSeoMutation>;
   blocks?: InputMaybe<Array<InputMaybe<PageBlocksMutation>>>;
 };
@@ -319,7 +350,14 @@ export type PostsMutation = {
   body?: InputMaybe<Scalars['JSON']>;
 };
 
-export type PagePartsFragment = { __typename?: 'Page', title: string, path: string, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null };
+export type ContentQueryQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type ContentQueryQuery = { __typename?: 'Query', page: { __typename?: 'Page', title: string, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null, image?: { __typename: 'PageBlocksHeroImage', src: string, alt: string, width: number, height: number } | null } | { __typename: 'PageBlocksImage', src: string, alt: string, width: number, height: number } | null> | null } };
+
+export type PagePartsFragment = { __typename?: 'Page', title: string, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null, image?: { __typename: 'PageBlocksHeroImage', src: string, alt: string, width: number, height: number } | null } | { __typename: 'PageBlocksImage', src: string, alt: string, width: number, height: number } | null> | null };
 
 export type PostsPartsFragment = { __typename?: 'Posts', title?: string | null, body?: any | null };
 
@@ -328,7 +366,7 @@ export type PageQueryVariables = Exact<{
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, path: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null } };
+export type PageQuery = { __typename?: 'Query', page: { __typename?: 'Page', id: string, title: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null, image?: { __typename: 'PageBlocksHeroImage', src: string, alt: string, width: number, height: number } | null } | { __typename: 'PageBlocksImage', src: string, alt: string, width: number, height: number } | null> | null } };
 
 export type PageConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']>;
@@ -339,7 +377,7 @@ export type PageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'Page', id: string, title: string, path: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null } | null> | null } | null } | null> | null } };
+export type PageConnectionQuery = { __typename?: 'Query', pageConnection: { __typename?: 'PageConnection', totalCount: number, edges?: Array<{ __typename?: 'PageConnectionEdges', node?: { __typename?: 'Page', id: string, title: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'PageSeo', title: string, description: string } | null, blocks?: Array<{ __typename: 'PageBlocksHero', headline?: string | null, text?: string | null, image?: { __typename: 'PageBlocksHeroImage', src: string, alt: string, width: number, height: number } | null } | { __typename: 'PageBlocksImage', src: string, alt: string, width: number, height: number } | null> | null } | null } | null> | null } };
 
 export type PostsQueryVariables = Exact<{
   relativePath: Scalars['String'];
@@ -362,7 +400,6 @@ export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __
 export const PagePartsFragmentDoc = gql`
     fragment PageParts on Page {
   title
-  path
   seo {
     __typename
     title
@@ -373,6 +410,19 @@ export const PagePartsFragmentDoc = gql`
     ... on PageBlocksHero {
       headline
       text
+      image {
+        __typename
+        src
+        alt
+        width
+        height
+      }
+    }
+    ... on PageBlocksImage {
+      src
+      alt
+      width
+      height
     }
   }
 }
@@ -383,6 +433,13 @@ export const PostsPartsFragmentDoc = gql`
   body
 }
     `;
+export const ContentQueryDocument = gql`
+    query ContentQuery($relativePath: String!) {
+  page(relativePath: $relativePath) {
+    ...PageParts
+  }
+}
+    ${PagePartsFragmentDoc}`;
 export const PageDocument = gql`
     query page($relativePath: String!) {
   page(relativePath: $relativePath) {
@@ -480,7 +537,10 @@ export const PostsConnectionDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      page(variables: PageQueryVariables, options?: C): Promise<{data: PageQuery, variables: PageQueryVariables, query: string}> {
+      ContentQuery(variables: ContentQueryQueryVariables, options?: C): Promise<{data: ContentQueryQuery, variables: ContentQueryQueryVariables, query: string}> {
+        return requester<{data: ContentQueryQuery, variables: ContentQueryQueryVariables, query: string}, ContentQueryQueryVariables>(ContentQueryDocument, variables, options);
+      },
+    page(variables: PageQueryVariables, options?: C): Promise<{data: PageQuery, variables: PageQueryVariables, query: string}> {
         return requester<{data: PageQuery, variables: PageQueryVariables, query: string}, PageQueryVariables>(PageDocument, variables, options);
       },
     pageConnection(variables?: PageConnectionQueryVariables, options?: C): Promise<{data: PageConnectionQuery, variables: PageConnectionQueryVariables, query: string}> {

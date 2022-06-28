@@ -1,6 +1,5 @@
 fragment PageParts on Page {
   title
-  path
   seo {
     __typename
     title
@@ -11,6 +10,19 @@ fragment PageParts on Page {
     ... on PageBlocksHero {
       headline
       text
+      image {
+        __typename
+        src
+        alt
+        width
+        height
+      }
+    }
+    ... on PageBlocksImage {
+      src
+      alt
+      width
+      height
     }
   }
 }

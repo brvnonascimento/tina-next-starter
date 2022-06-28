@@ -1,5 +1,6 @@
-import { defineSchema, defineConfig } from 'tinacms'
-import { heroBlock } from '../src/blocks/HeroBlock.server'
+import { defineSchema, defineConfig, TinaTemplate } from 'tinacms'
+import { heroBlockTemplate } from '../src/blocks/HeroBlock.server'
+import { imageBlockField } from '../src/blocks/ImageBlock.server'
 
 const schema = defineSchema({
   collections: [
@@ -13,12 +14,6 @@ const schema = defineSchema({
           label: 'Title',
           name: 'title',
           isTitle: true,
-          required: true,
-        },
-        {
-          type: 'string',
-          label: 'Path',
-          name: 'path',
           required: true,
         },
         {
@@ -48,7 +43,7 @@ const schema = defineSchema({
           ui: {
             visualSelector: true,
           },
-          templates: [heroBlock],
+          templates: [heroBlockTemplate, imageBlockField] as TinaTemplate[],
         },
       ],
     },
@@ -109,6 +104,11 @@ const apiURL =
 export const tinaConfig = defineConfig({
   apiURL,
   schema,
+  mediaStore: async () => {
+    const pack = await import('next-tinacms-cloudinary')
+
+    return pack.TinaCloudCloudinaryMediaStore
+  },
   cmsCallback: (cms) => {
     //  add your CMS callback code here (if you want)
 

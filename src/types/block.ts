@@ -1,3 +1,8 @@
 export type BaseBlockProps<DataFragment = any> = {
-  data: DataFragment
+  data?: Omit<DataFragment, '__typename'> | null
 }
+
+export type BaseBlockPropsWithTypename<DataFragment = any> =
+  BaseBlockProps<DataFragment> & {
+    data?: DataFragment | null
+  }

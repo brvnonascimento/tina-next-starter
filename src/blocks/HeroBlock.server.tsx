@@ -1,9 +1,10 @@
 import { css } from 'linaria'
-import { gql, TinaTemplate } from 'tinacms'
-import { HeroBlockPropsFragment } from '../../graphql-types'
+import { TinaTemplate } from 'tinacms'
 import { BaseBlockProps } from '../types/block'
+import ImageBlock, { imageBlockField } from './ImageBlock.server'
+import { PageBlocksHero } from 'tina-types'
 
-export type HeroBlockProps = BaseBlockProps<HeroBlockPropsFragment>
+export type HeroBlockProps = BaseBlockProps<PageBlocksHero>
 
 const HeroBlock = ({ data }: HeroBlockProps) => {
   return (
@@ -14,20 +15,15 @@ const HeroBlock = ({ data }: HeroBlockProps) => {
         }
       `}
     >
-      <h1>{data.headline}</h1>
-      <p>{data.text}</p>
+      <h1>{data?.headline}</h1>
+      <p>{data?.text}</p>
+
+      <ImageBlock data={data?.image} />
     </section>
   )
 }
 
-export const HeroBlockPropsFragmentDocument = gql`
-  fragment HeroBlockProps on PageBlocksHero {
-    headline
-    text
-  }
-`
-
-export const heroBlock: TinaTemplate = {
+export const heroBlockTemplate: TinaTemplate = {
   name: 'hero',
   label: 'Hero',
   ui: {
@@ -50,6 +46,7 @@ export const heroBlock: TinaTemplate = {
         component: 'markdown',
       },
     },
+    imageBlockField,
   ],
 }
 
